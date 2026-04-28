@@ -43,6 +43,9 @@ const BUILTIN_FUNCTIONS = [
 
 const FUNCTION_LABELS: Record<string, { name: string; icon: string; color: string }> = {
   weather_current: { name: '查天气', icon: '🌤', color: 'bg-blue-100 text-blue-700' },
+  news_headlines: { name: '看新闻', icon: '📰', color: 'bg-red-100 text-red-700' },
+  geo_location: { name: '查位置', icon: '📍', color: 'bg-green-100 text-green-700' },
+  translate_text: { name: '翻译', icon: '🌐', color: 'bg-teal-100 text-teal-700' },
   send_notification: { name: '发通知', icon: '🔔', color: 'bg-orange-100 text-orange-700' },
   create_automation: { name: '定时', icon: '⏰', color: 'bg-purple-100 text-purple-700' },
   toast: { name: '提示', icon: '💬', color: 'bg-gray-100 text-gray-700' },
@@ -57,6 +60,17 @@ const SKILLS = [
     steps: [
       { function: 'weather_current', type: 'mcp', args: { location: '北京' } },
       { function: 'send_notification', type: 'local', args: { title: '天气通知', content: '北京天气预报已播报' } },
+    ],
+  },
+  {
+    id: 'skill-daily-news',
+    name: '每日新闻推送',
+    description: '每天早上10点获取最新新闻头条并发送通知到通知栏',
+    icon: '📰',
+    cron: '0 10 * * *',
+    steps: [
+      { function: 'news_headlines', type: 'mcp', args: { category: '综合', limit: '5' } },
+      { function: 'send_notification', type: 'local', args: { title: '每日新闻', content: '今日新闻摘要已生成，请查看' } },
     ],
   },
 ]
@@ -328,8 +342,20 @@ export default function MarketplacePage() {
                 <div className="mb-4 flex items-center gap-3">
                   <span className="text-2xl">{skill.icon}</span>
                   <div>
-                    <h3 className="text-base font-semibold text-gray-900">{skill.name}</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-semibold text-gray-900">{skill.name}</h3>
+                      {'cron' in skill && (
+                        <span className="rounded bg-purple-100 px-1.5 py-0.5 text-[10px] font-medium text-purple-600">
+                          定时
+                        </span>
+                      )}
+                    </div>
                     <p className="text-sm text-gray-500">{skill.description}</p>
+                    {'cron' in skill && (
+                      <p className="mt-0.5 text-xs text-purple-500">
+                        ⏰ {(skill as any).cron}
+                      </p>
+                    )}
                   </div>
                 </div>
 

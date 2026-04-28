@@ -25,9 +25,6 @@ const BUILTIN_FUNCTIONS = [
     { name: 'create_automation', description: '创建定时自动化规则（每日/每周）', icon: '⏰', params: ['name', 'cron', 'steps'] },
   ]},
   { category: '工具', items: [
-    { name: 'calculate', description: '数学计算表达式求值', icon: '🧮', params: ['expression'] },
-    { name: 'base64', description: 'Base64 编解码', icon: '🔐', params: ['text'] },
-    { name: 'generateUuid', description: '生成 UUID 标识符', icon: '🔑', params: ['count'] },
   ]},
   { category: '系统', items: [
     { name: 'getCurrentTime', description: '获取当前系统时间', icon: '🕐', params: ['format'] },

@@ -81,6 +81,16 @@ export interface PluginManifestResponse {
   dependencies: DependencyDto[]
 }
 
+export interface McpToolResponse {
+  name: string
+  description: string
+  parameters?: {
+    type: string
+    properties?: Record<string, { type: string; description: string }>
+    required?: string[]
+  }
+}
+
 export interface CreatePluginRequest {
   functionName: string
   description: string

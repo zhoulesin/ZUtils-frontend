@@ -6,6 +6,7 @@ import type {
   PluginManifestResponse,
   CreatePluginRequest,
   ParameterDto,
+  McpToolResponse,
 } from '@/types/plugin'
 
 export const pluginsApi = {
@@ -20,6 +21,9 @@ export const pluginsApi = {
 
   manifest: () =>
     client.get<ApiResponse<PluginManifestResponse[]>>('/plugins/manifest').then((r) => r.data),
+
+  mcpTools: () =>
+    client.get<ApiResponse<McpToolResponse[]>>('/mcp/tools').then((r) => r.data),
 
   publishFromPlayground: (data: {
     code: string

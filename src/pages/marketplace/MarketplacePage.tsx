@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Search, Plug, Puzzle } from 'lucide-react'
+import { Search, Plug, Puzzle, Smartphone } from 'lucide-react'
 import { pluginsApi } from '@/api/plugins.api'
 import type { PluginListResponse, McpToolResponse } from '@/types/plugin'
 import { PluginCard } from '@/components/common/PluginCard'
@@ -9,12 +9,42 @@ import { Pagination } from '@/components/common/Pagination'
 import { CATEGORIES } from '@/constants/categories'
 import { useDebounce } from '@/hooks/useDebounce'
 
-type Section = 'plugins' | 'mcp'
+type Section = 'plugins' | 'mcp' | 'builtin'
 
 const MCP_ICONS: Record<string, string> = {
   weather_current: '🌤',
   translate_text: '🌐',
 }
+
+const BUILTIN_FUNCTIONS = [
+  { category: '通知', items: [
+    { name: 'send_notification', description: '发送系统通知到通知栏', icon: '🔔', params: ['title', 'content'] },
+    { name: 'toast', description: '在屏幕底部显示短时提示消息', icon: '💬', params: ['message'] },
+  ]},
+  { category: '自动化', items: [
+    { name: 'create_automation', description: '创建定时自动化规则（每日/每周）', icon: '⏰', params: ['name', 'cron', 'steps'] },
+  ]},
+  { category: '工具', items: [
+    { name: 'calculate', description: '数学计算表达式求值', icon: '🧮', params: ['expression'] },
+    { name: 'base64', description: 'Base64 编解码', icon: '🔐', params: ['text'] },
+    { name: 'generateUuid', description: '生成 UUID 标识符', icon: '🔑', params: ['count'] },
+  ]},
+  { category: '系统', items: [
+    { name: 'getCurrentTime', description: '获取当前系统时间', icon: '🕐', params: ['format'] },
+    { name: 'getBatteryLevel', description: '获取当前电池电量百分比', icon: '🔋', params: [] },
+    { name: 'setScreenBrightness', description: '设置屏幕亮度', icon: '☀️', params: ['level'] },
+    { name: 'getDeviceInfo', description: '获取设备基本信息', icon: '📱', params: [] },
+    { name: 'getVolume', description: '获取当前媒体音量', icon: '🔊', params: [] },
+    { name: 'setVolume', description: '设置媒体音量', icon: '🔉', params: ['level'] },
+    { name: 'getNetworkType', description: '获取当前网络类型', icon: '📶', params: [] },
+    { name: 'getStorageInfo', description: '获取存储空间信息', icon: '💾', params: [] },
+    { name: 'getScreenInfo', description: '获取屏幕信息', icon: '🖥️', params: [] },
+  ]},
+  { category: '剪贴板', items: [
+    { name: 'setClipboard', description: '将文本写入系统剪贴板', icon: '📋', params: ['text'] },
+    { name: 'getClipboard', description: '读取系统剪贴板内容', icon: '📄', params: [] },
+  ]},
+]
 
 export default function MarketplacePage() {
   const [section, setSection] = useState<Section>('plugins')
@@ -39,7 +69,7 @@ export default function MarketplacePage() {
         })
         .catch(() => setPlugins([]))
         .finally(() => setLoading(false))
-    } else {
+    } else if (section === 'mcp') {
       setLoading(true)
       pluginsApi
         .mcpTools()
@@ -63,11 +93,25 @@ export default function MarketplacePage() {
       )
     : mcpTools
 
+  const filteredBuiltin = debouncedSearch
+    ? BUILTIN_FUNCTIONS.map(group => ({
+        ...group,
+        items: group.items.filter(f =>
+          f.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+          f.description.toLowerCase().includes(debouncedSearch.toLowerCase())
+        ),
+      })).filter(g => g.items.length > 0)
+    : BUILTIN_FUNCTIONS
+
+  const placeholderText = section === 'plugins' ? '搜索插件...'
+    : section === 'mcp' ? '搜索 MCP 工具...'
+    : '搜索内置函数...'
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
         <h1 className="mb-2 text-2xl font-bold text-gray-900">插件市场</h1>
-        <p className="text-gray-500">浏览和发现可安装的插件与 MCP 工具</p>
+        <p className="text-gray-500">浏览和发现可安装的插件、MCP 工具与内置函数</p>
       </div>
 
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -75,7 +119,7 @@ export default function MarketplacePage() {
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
-            placeholder={section === 'plugins' ? '搜索插件...' : '搜索 MCP 工具...'}
+            placeholder={placeholderText}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-sm focus:border-primary-500 focus:outline-none"
@@ -105,6 +149,17 @@ export default function MarketplacePage() {
             <Plug className="h-4 w-4" />
             MCP 工具
           </button>
+          <button
+            onClick={() => setSection('builtin')}
+            className={`flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium ${
+              section === 'builtin'
+                ? 'bg-primary-600 text-white'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+          >
+            <Smartphone className="h-4 w-4" />
+            内置函数
+          </button>
         </div>
       </div>
 
@@ -126,7 +181,7 @@ export default function MarketplacePage() {
         </div>
       )}
 
-      {loading ? (
+      {loading && section !== 'builtin' ? (
         <LoadingSkeleton />
       ) : section === 'plugins' ? (
         filteredPlugins.length === 0 ? (
@@ -143,47 +198,88 @@ export default function MarketplacePage() {
             </div>
           </>
         )
-      ) : filteredMcp.length === 0 ? (
-        <EmptyState title="没有找到 MCP 工具" description="暂无可用 MCP 工具" />
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredMcp.map((tool) => (
-            <div
-              key={tool.name}
-              className="group rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-primary-200 hover:shadow-md"
-            >
-              <div className="mb-4 flex items-start justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-xl">
-                  {MCP_ICONS[tool.name] || '🔌'}
+      ) : section === 'mcp' ? (
+        filteredMcp.length === 0 ? (
+          <EmptyState title="没有找到 MCP 工具" description="暂无可用 MCP 工具" />
+        ) : (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredMcp.map((tool) => (
+              <div
+                key={tool.name}
+                className="group rounded-xl border border-gray-200 bg-white p-6 transition-all hover:border-primary-200 hover:shadow-md"
+              >
+                <div className="mb-4 flex items-start justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 text-xl">
+                    {MCP_ICONS[tool.name] || '🔌'}
+                  </div>
+                  <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+                    MCP
+                  </span>
                 </div>
-                <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-700">
-                  MCP
-                </span>
+
+                <h3 className="mb-1 text-base font-semibold text-gray-900">
+                  {tool.name}
+                </h3>
+                <p className="mb-4 line-clamp-2 text-sm text-gray-500">{tool.description}</p>
+
+                {tool.parameters?.properties && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium text-gray-400">参数：</p>
+                    {Object.entries(tool.parameters.properties).map(([key, prop]) => (
+                      <div key={key} className="flex items-center gap-2 text-xs text-gray-500">
+                        <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-700">
+                          {key}
+                        </code>
+                        <span className={tool.parameters?.required?.includes(key) ? 'text-red-400' : ''}>
+                          {tool.parameters?.required?.includes(key) ? '(必填)' : '(选填)'}
+                        </span>
+                        <span className="truncate">{prop.description}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-
-              <h3 className="mb-1 text-base font-semibold text-gray-900">
-                {tool.name}
-              </h3>
-              <p className="mb-4 line-clamp-2 text-sm text-gray-500">{tool.description}</p>
-
-              {tool.parameters?.properties && (
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-gray-400">参数：</p>
-                  {Object.entries(tool.parameters.properties).map(([key, prop]) => (
-                    <div key={key} className="flex items-center gap-2 text-xs text-gray-500">
-                      <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-700">
-                        {key}
-                      </code>
-                      <span className={tool.parameters?.required?.includes(key) ? 'text-red-400' : ''}>
-                        {tool.parameters?.required?.includes(key) ? '(必填)' : '(选填)'}
-                      </span>
-                      <span className="truncate">{prop.description}</span>
+            ))}
+          </div>
+        )
+      ) : (
+        <div className="space-y-8">
+          {filteredBuiltin.length === 0 ? (
+            <EmptyState title="没有找到内置函数" description="试试其他关键词" />
+          ) : (
+            filteredBuiltin.map((group) => (
+              <div key={group.category}>
+                <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-400">
+                  {group.category}
+                </h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.items.map((fn) => (
+                    <div
+                      key={fn.name}
+                      className="group rounded-xl border border-gray-200 bg-white p-5 transition-all hover:border-gray-300 hover:shadow-sm"
+                    >
+                      <div className="mb-3 flex items-center gap-3">
+                        <span className="text-lg">{fn.icon}</span>
+                        <div>
+                          <h4 className="text-sm font-semibold text-gray-900">{fn.name}</h4>
+                          <p className="text-xs text-gray-500">{fn.description}</p>
+                        </div>
+                      </div>
+                      {fn.params.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {fn.params.map((p) => (
+                            <span key={p} className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-mono text-gray-600">
+                              {p}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            ))
+          )}
         </div>
       )}
     </div>

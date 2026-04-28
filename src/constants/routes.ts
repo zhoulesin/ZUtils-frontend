@@ -1,0 +1,17 @@
+export const ROUTES = {
+  HOME: '/',
+  MARKETPLACE: '/marketplace',
+  PLUGIN_DETAIL: (id: string) => `/marketplace/${id}`,
+  PLUGIN_VERSIONS: (id: string) => `/marketplace/${id}/versions`,
+  DEV_DASHBOARD: '/dev',
+  DEV_PLUGINS: '/dev/plugins',
+  DEV_PLUGINS_NEW: '/dev/plugins/new',
+  DEV_PLUGINS_EDIT: (id: string) => `/dev/plugins/${id}`,
+  DEV_VERSION_NEW: (id: string) => `/dev/plugins/${id}/versions/new`,
+  LOGIN: '/login',
+  REGISTER: '/register',
+  ADMIN: '/admin',
+  ADMIN_REVIEWS: '/admin/plugins',
+  ADMIN_REVIEW: (id: string) => `/admin/plugins/${id}/review`,
+  PLAYGROUND: '/playground',
+} as const

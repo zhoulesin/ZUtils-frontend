@@ -24,8 +24,7 @@ const BUILTIN_FUNCTIONS = [
   { category: '自动化', items: [
     { name: 'create_automation', description: '创建定时自动化规则（每日/每周）', icon: '⏰', params: ['name', 'cron', 'steps'] },
   ]},
-  { category: '工具', items: [
-  ]},
+
   { category: '系统', items: [
     { name: 'getCurrentTime', description: '获取当前系统时间', icon: '🕐', params: ['format'] },
     { name: 'getBatteryLevel', description: '获取当前电池电量百分比', icon: '🔋', params: [] },

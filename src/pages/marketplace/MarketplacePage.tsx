@@ -14,6 +14,7 @@ type Section = 'plugins' | 'mcp' | 'builtin' | 'skill'
 const MCP_ICONS: Record<string, string> = {
   weather_current: '🌤',
   translate_text: '🌐',
+  web_search: '🔍',
 }
 
 const BUILTIN_FUNCTIONS = [
@@ -43,6 +44,7 @@ const BUILTIN_FUNCTIONS = [
 
 const FUNCTION_LABELS: Record<string, { name: string; icon: string; color: string }> = {
   weather_current: { name: '查天气', icon: '🌤', color: 'bg-blue-100 text-blue-700' },
+  web_search: { name: '搜网页', icon: '🔍', color: 'bg-indigo-100 text-indigo-700' },
   news_headlines: { name: '看新闻', icon: '📰', color: 'bg-red-100 text-red-700' },
   geo_location: { name: '查位置', icon: '📍', color: 'bg-green-100 text-green-700' },
   translate_text: { name: '翻译', icon: '🌐', color: 'bg-teal-100 text-teal-700' },

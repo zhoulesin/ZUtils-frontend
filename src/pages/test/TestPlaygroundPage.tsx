@@ -120,8 +120,18 @@ export default function TestPlaygroundPage() {
       <div className="flex flex-1 overflow-hidden">
         <div className="flex w-3/5 flex-col border-r">
           <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-1.5">
-            <span className="text-xs font-medium text-gray-500">fun run(args: Map&lt;String, Any?&gt;): Any?</span>
-            <span className="text-xs text-gray-400">Kotlin</span>
+            <span className="text-xs font-medium text-gray-500">
+              fun run(args: Map&lt;String, Any?&gt;, bridge: Any?): Any?
+            </span>
+            <div className="flex items-center gap-2">
+              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] text-blue-600" title="callApi 中写 'appContext' 自动替换为 Application">
+                "appContext" 占位符
+              </span>
+              <span className="rounded bg-purple-50 px-1.5 py-0.5 text-[10px] text-purple-600" title="反射获取 b::class.java.getField('appHandler')">
+                bridge.appHandler 字段
+              </span>
+              <span className="text-xs text-gray-400">Kotlin</span>
+            </div>
           </div>
           <div className="flex-1">
             <KotlinEditor value={code} onChange={setCode} />

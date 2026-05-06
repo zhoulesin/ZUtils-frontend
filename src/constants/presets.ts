@@ -44,4 +44,25 @@ val len = text.length
 val chars = text.toSet().size
 return "length=$len, unique_chars=$chars"`,
   },
+  {
+    name: 'bridge-toast',
+    label: 'Bridge Toast',
+    args: { content: 'Hello from DEX!' },
+    code: `val b = bridge ?: return "no bridge（沙箱模式 bridge 不可用，发布后自动注入）"
+val callApi = b::class.java.getMethod("callApi", String::class.java, List::class.java)
+
+// bridge 预置了两助手变量：appContext(Application) + appHandler(主线程Handler)
+// 可从 AppApiBridge 反射获取：
+val handlerField = b::class.java.getField("appHandler")
+val handler = handlerField.get(b)
+
+// 主线程上创建并显示 Toast
+handler::class.java.getMethod("post", Class.forName("java.lang.Runnable"))
+    .invoke(handler, java.lang.Runnable {
+        val toast = callApi.invoke(b, "android.widget.Toast",
+            listOf("makeText", "appContext", args["content"] ?: "", "0"))
+        toast::class.java.getMethod("show").invoke(toast)
+    })
+return "toast 已显示"`,
+  },
 ]

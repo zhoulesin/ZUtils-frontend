@@ -29,6 +29,8 @@ export interface PluginListResponse {
   icon: string
   category: PluginCategory
   author: string
+  memberUid?: string
+  authorNickname?: string
   version: string
   downloads: number
   rating: number

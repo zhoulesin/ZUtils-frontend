@@ -8,7 +8,7 @@ export default function DashboardPage() {
   const [plugins, setPlugins] = useState<PluginListResponse[]>([])
 
   useEffect(() => {
-    pluginsApi.list({ size: 100 }).then((res) => setPlugins(res.data.content)).catch(() => {})
+    pluginsApi.my({ size: 100 }).then((res) => setPlugins(res.data.content)).catch(() => {})
   }, [])
 
   const totalDownloads = plugins.reduce((s, p) => s + p.downloads, 0)

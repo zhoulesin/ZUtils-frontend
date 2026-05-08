@@ -13,9 +13,31 @@ interface AuthState {
   register: (data: RegisterRequest) => Promise<void>
   logout: () => void
   clearError: () => void
+  updateUser: (user: Partial<User>) => void
 }
 
 const token = localStorage.getItem('zutils_token')
+
+function buildUser(developer: {
+  id: number
+  username: string
+  nickname?: string
+  email: string
+  role?: string
+  memberUid?: string
+  avatarUrl?: string
+}): User {
+  return {
+    id: developer.id,
+    username: developer.username,
+    nickname: developer.nickname || developer.username,
+    email: developer.email,
+    role: developer.role || 'DEVELOPER',
+    memberUid: developer.memberUid || '',
+    avatarUrl: developer.avatarUrl || '',
+    bio: '',
+  }
+}
 
 export const useAuthStore = create<AuthState>((set) => ({
   token,
@@ -29,7 +51,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const res = await authApi.login(data)
       const { token: t, developer } = res.data
-      const user = { username: developer.username, email: developer.email }
+      const user = buildUser(developer)
       localStorage.setItem('zutils_token', t)
       localStorage.setItem('zutils_user', JSON.stringify(user))
       set({ token: t, user, loading: false, isAuthenticated: true })
@@ -44,7 +66,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       const res = await authApi.register(data)
       const { token: t, developer } = res.data
-      const user = { username: developer.username, email: developer.email }
+      const user = buildUser(developer)
       localStorage.setItem('zutils_token', t)
       localStorage.setItem('zutils_user', JSON.stringify(user))
       set({ token: t, user, loading: false, isAuthenticated: true })
@@ -61,4 +83,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   clearError: () => set({ error: null }),
+
+  updateUser: (partial) => {
+    set((state) => {
+      if (!state.user) return {}
+      const updated = { ...state.user, ...partial }
+      localStorage.setItem('zutils_user', JSON.stringify(updated))
+      return { user: updated }
+    })
+  },
 }))

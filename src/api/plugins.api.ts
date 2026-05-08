@@ -13,6 +13,9 @@ export const pluginsApi = {
   list: (params?: { category?: string; page?: number; size?: number; sort?: string }) =>
     client.get<ApiResponse<Page<PluginListResponse>>>('/plugins', { params }).then((r) => r.data),
 
+  my: (params?: { page?: number; size?: number }) =>
+    client.get<ApiResponse<Page<PluginListResponse>>>('/plugins/my', { params }).then((r) => r.data),
+
   detail: (id: string) =>
     client.get<ApiResponse<PluginDetailResponse>>(`/plugins/${id}`).then((r) => r.data),
 

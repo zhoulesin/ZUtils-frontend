@@ -42,7 +42,20 @@ export function PluginCard({ plugin }: PluginCardProps) {
           <Download className="h-4 w-4" />
           {formatNumber(plugin.downloads)}
         </span>
-        <span className="ml-auto text-xs text-gray-400">v{plugin.version}</span>
+        <span className="ml-auto text-xs text-gray-400">
+          {plugin.memberUid ? (
+            <Link
+              to={ROUTES.DEVELOPER_PROFILE(plugin.memberUid)}
+              className="hover:text-primary-600"
+              onClick={(e) => e.stopPropagation()}
+            >
+              @{plugin.authorNickname || plugin.author}
+            </Link>
+          ) : (
+            `@${plugin.authorNickname || plugin.author}`
+          )}
+          {' · '}v{plugin.version}
+        </span>
       </div>
     </Link>
   )

@@ -14,21 +14,6 @@ export const PRESETS: Preset[] = [
 return "Hello, $name!"`,
   },
   {
-    name: 'calculate',
-    label: '计算器',
-    args: { a: 42, b: 7, op: '+' },
-    code: `val a = args["a"]?.toString()?.toIntOrNull() ?: 0
-val b = args["b"]?.toString()?.toIntOrNull() ?: 0
-val op = args["op"]?.toString() ?: "+"
-return when (op) {
-    "+" -> a + b
-    "-" -> a - b
-    "*" -> a * b
-    "/" -> if (b != 0) a / b else "division by zero"
-    else -> "unknown op"
-}`,
-  },
-  {
     name: 'uuid',
     label: 'UUID 生成',
     args: { count: 3 },

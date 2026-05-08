@@ -11,8 +11,10 @@ const MarketplacePage = lazy(() => import('@/pages/marketplace/MarketplacePage')
 const PluginDetailPage = lazy(() => import('@/pages/marketplace/PluginDetailPage'))
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'))
 const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'))
+const DeveloperProfilePage = lazy(() => import('@/pages/DeveloperProfilePage'))
 const DashboardPage = lazy(() => import('@/pages/dev/DashboardPage'))
 const MyPluginsPage = lazy(() => import('@/pages/dev/MyPluginsPage'))
+const ProfileSettingsPage = lazy(() => import('@/pages/dev/ProfileSettingsPage'))
 const CreatePluginPage = lazy(() => import('@/pages/dev/CreatePluginPage'))
 const NewVersionPage = lazy(() => import('@/pages/dev/NewVersionPage'))
 const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage'))
@@ -42,9 +44,12 @@ export default function App() {
               <Route path={ROUTES.LOGIN} element={<LoginPage />} />
               <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
 
+              <Route path="/developers/:memberUid" element={<DeveloperProfilePage />} />
+
               <Route path="/dev" element={<DevLayout />}>
                 <Route index element={<DashboardPage />} />
                 <Route path="plugins" element={<MyPluginsPage />} />
+                <Route path="profile" element={<ProfileSettingsPage />} />
                 <Route path="playground" element={<TestPlaygroundPage />} />
                 <Route path="plugins/:id/versions/new" element={<NewVersionPage />} />
               </Route>

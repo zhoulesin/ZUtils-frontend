@@ -5,6 +5,7 @@ const sidebarLinks = [
   { to: ROUTES.DEV_DASHBOARD, label: '仪表盘' },
   { to: ROUTES.DEV_PLUGINS, label: '我的插件' },
   { to: '/dev/playground', label: '创建插件' },
+  { to: ROUTES.DEV_PROFILE, label: '个人设置' },
 ]
 
 export function DevLayout() {

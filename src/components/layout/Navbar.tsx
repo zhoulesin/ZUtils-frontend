@@ -48,6 +48,9 @@ export function Navbar() {
                     <Link to={ROUTES.DEV_PLUGINS} className="block px-4 py-2 text-sm hover:bg-gray-50">
                       我的插件
                     </Link>
+                    <Link to={ROUTES.DEV_PROFILE} className="block px-4 py-2 text-sm hover:bg-gray-50">
+                      个人设置
+                    </Link>
                     <hr className="my-1" />
                     <button onClick={handleLogout} className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-50">
                       退出登录

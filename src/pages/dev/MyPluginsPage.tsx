@@ -14,7 +14,7 @@ export default function MyPluginsPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    pluginsApi.list({ size: 100 })
+    pluginsApi.my({ size: 100 })
       .then((res) => setPlugins(res.data.content))
       .catch(() => {})
       .finally(() => setLoading(false))

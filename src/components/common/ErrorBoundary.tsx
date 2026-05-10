@@ -26,9 +26,9 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         this.props.fallback ?? (
-          <div className="flex flex-col items-center justify-center py-16 text-gray-400">
+          <div className="flex flex-col items-center justify-center py-16 text-raycast-dim">
             <AlertTriangle className="mb-4 h-16 w-16 text-red-400" />
-            <h3 className="mb-1 text-lg font-medium text-gray-600">页面出错了</h3>
+            <h3 className="mb-1 text-lg font-medium text-raycast-muted">页面出错了</h3>
             <p className="mb-4 text-sm">{this.state.error?.message}</p>
             <button
               onClick={() => this.setState({ hasError: false, error: null })}

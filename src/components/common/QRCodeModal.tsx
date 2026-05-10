@@ -24,17 +24,17 @@ export function QRCodeModal({ open, onClose, value, title = '扫码安装到手�
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
-      <div className="rounded-2xl bg-white p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+      <div className="rounded-2xl bg-raycast-surface p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-lg font-semibold">{title}</h3>
-          <button onClick={onClose} className="rounded-lg p-1 hover:bg-gray-100">
+          <button onClick={onClose} className="rounded-lg p-1 hover:bg-raycast-elevated">
             <X className="h-5 w-5" />
           </button>
         </div>
         {QRCodeImg && (
           <div className="flex flex-col items-center gap-3">
             <img src={QRCodeImg} alt="QR Code" className="h-64 w-64" />
-            <p className="text-sm text-gray-500">打开 ZUtils App 扫码安装</p>
+            <p className="text-sm text-raycast-muted">打开 ZPlatform App 扫码安装</p>
           </div>
         )}
       </div>

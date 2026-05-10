@@ -33,34 +33,34 @@ export default function CreatePluginPage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">创建新插件</h1>
-      <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border bg-white p-6">
+      <h1 className="mb-6 text-2xl font-bold text-raycast-text">创建新插件</h1>
+      <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border-raycast-border-solid bg-raycast-surface p-6">
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">函数名 *</label>
+          <label className="mb-1 block text-sm font-medium text-raycast-muted">函数名 *</label>
           <input
             value={form.functionName}
             onChange={(e) => setForm({ ...form, functionName: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+            className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             placeholder="例如: getWeather"
             required
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">描述</label>
+          <label className="mb-1 block text-sm font-medium text-raycast-muted">描述</label>
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+            className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             rows={3}
             placeholder="描述此插件的功能..."
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">分类</label>
+          <label className="mb-1 block text-sm font-medium text-raycast-muted">分类</label>
           <select
             value={form.category}
             onChange={(e) => setForm({ ...form, category: e.target.value as PluginCategory })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+            className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
           >
             {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
               <option key={value} value={value}>{label}</option>
@@ -68,19 +68,19 @@ export default function CreatePluginPage() {
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">作者</label>
+          <label className="mb-1 block text-sm font-medium text-raycast-text">作者</label>
           <input
             value={form.author}
             onChange={(e) => setForm({ ...form, author: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
-            placeholder="ZUtils Team"
+            className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
+            placeholder="ZPlatform Team"
           />
         </div>
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && <p className="text-sm text-raycast-red">{error}</p>}
         <button
           type="submit"
           disabled={submitting}
-          className="w-full rounded-lg bg-primary-600 py-2 text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-50"
+          className="w-full rounded-lg bg-primary-600 py-2 text-sm font-semibold text-white hover:bg-primary-500 disabled:opacity-50"
         >
           {submitting ? '创建中...' : '创建并发布版本'}
         </button>

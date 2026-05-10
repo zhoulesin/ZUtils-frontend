@@ -10,9 +10,9 @@ export function EmptyState({
   description = '这里还没有内容',
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center py-16 text-gray-400">
+    <div className="flex flex-col items-center justify-center py-16 text-raycast-dim">
       <PackageOpen className="mb-4 h-16 w-16" />
-      <h3 className="mb-1 text-lg font-medium text-gray-600">{title}</h3>
+      <h3 className="mb-1 text-lg font-medium text-raycast-muted">{title}</h3>
       <p className="text-sm">{description}</p>
     </div>
   )

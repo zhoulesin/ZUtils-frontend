@@ -110,116 +110,116 @@ export default function ProfileSettingsPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">个人设置</h1>
+      <h1 className="mb-6 text-2xl font-bold text-raycast-text">个人设置</h1>
 
       {message && (
         <div className={`mb-4 rounded-lg px-4 py-3 text-sm ${
-          message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+          message.type === 'success' ? 'bg-raycast-green/10 text-raycast-green' : 'bg-raycast-red/10 text-raycast-red'
         }`}>
           {message.text}
         </div>
       )}
 
       <div className="space-y-6">
-        <form onSubmit={handleSave} className="space-y-5 rounded-xl border bg-white p-6">
-          <h2 className="text-base font-semibold text-gray-900">基本信息</h2>
+        <form onSubmit={handleSave} className="space-y-5 rounded-xl border-raycast-border-solid bg-raycast-surface p-6">
+          <h2 className="text-base font-semibold text-raycast-text">基本信息</h2>
 
           {user?.memberUid && (
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">开发者 ID</label>
+              <label className="mb-1 block text-sm font-medium text-raycast-muted">开发者 ID</label>
               <input
                 type="text"
                 value={user.memberUid}
                 disabled
-                className="w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-500"
+                className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2 text-sm text-raycast-muted"
               />
-              <p className="mt-1 text-xs text-gray-400">memberUid 不可修改</p>
+              <p className="mt-1 text-xs text-raycast-dim">memberUid 不可修改</p>
             </div>
           )}
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">昵称</label>
+            <label className="mb-1 block text-sm font-medium text-raycast-muted">昵称</label>
             <input
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
               maxLength={50}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+              className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">邮箱</label>
+            <label className="mb-1 block text-sm font-medium text-raycast-muted">邮箱</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               maxLength={100}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+              className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">头像 URL</label>
+            <label className="mb-1 block text-sm font-medium text-raycast-muted">头像 URL</label>
             <input
               type="text"
               value={avatarUrl}
               onChange={(e) => setAvatarUrl(e.target.value)}
               maxLength={500}
               placeholder="https://..."
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+              className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">个人简介</label>
+            <label className="mb-1 block text-sm font-medium text-raycast-muted">个人简介</label>
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               maxLength={1000}
               rows={3}
               placeholder="介绍一下自己..."
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+              className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={saving}
-            className="rounded-lg bg-primary-600 px-6 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
+            className="rounded-lg bg-primary-600 px-6 py-2 text-sm font-medium text-white hover:bg-primary-500 disabled:opacity-50"
           >
             {saving ? '保存中...' : '保存'}
           </button>
         </form>
 
-        <form onSubmit={handleChangePassword} className="space-y-5 rounded-xl border bg-white p-6">
-          <h2 className="text-base font-semibold text-gray-900">修改密码</h2>
+        <form onSubmit={handleChangePassword} className="space-y-5 rounded-xl border-raycast-border-solid bg-raycast-surface p-6">
+          <h2 className="text-base font-semibold text-raycast-text">修改密码</h2>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">当前密码</label>
+            <label className="mb-1 block text-sm font-medium text-raycast-muted">当前密码</label>
             <input
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+              className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-gray-700">新密码</label>
+            <label className="mb-1 block text-sm font-medium text-raycast-muted">新密码</label>
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="至少 8 位，含大小写字母和数字"
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-primary-500 focus:outline-none"
+              className="w-full rounded-lg border border-raycast-border-solid bg-raycast-elevated px-4 py-2.5 text-sm text-raycast-text placeholder:text-raycast-dim focus:border-primary-500 focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={saving}
-            className="rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            className="rounded-lg border-raycast-border-solid bg-raycast-surface px-6 py-2 text-sm font-medium text-raycast-text hover:bg-raycast-elevated disabled:opacity-50"
           >
             {saving ? '修改中...' : '修改密码'}
           </button>

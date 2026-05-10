@@ -23,13 +23,13 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(page - 1)}
         disabled={page <= 1}
-        className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 disabled:opacity-30"
+        className="rounded-lg p-2 text-raycast-muted hover:bg-raycast-elevated disabled:opacity-30"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       {pages.map((p, i) =>
         p === '...' ? (
-          <span key={`dot-${i}`} className="px-2 text-gray-400">
+          <span key={`dot-${i}`} className="px-2 text-raycast-dim">
             ...
           </span>
         ) : (
@@ -37,7 +37,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
             key={p}
             onClick={() => onPageChange(p)}
             className={`rounded-lg px-3 py-1.5 text-sm font-medium ${
-              p === page ? 'bg-primary-600 text-white' : 'text-gray-600 hover:bg-gray-100'
+              p === page ? 'bg-primary-600 text-white' : 'text-raycast-muted hover:bg-raycast-elevated'
             }`}
           >
             {p}
@@ -47,7 +47,7 @@ export function Pagination({ page, totalPages, onPageChange }: PaginationProps) 
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page >= totalPages}
-        className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 disabled:opacity-30"
+        className="rounded-lg p-2 text-raycast-muted hover:bg-raycast-elevated disabled:opacity-30"
       >
         <ChevronRight className="h-5 w-5" />
       </button>

@@ -80,44 +80,44 @@ export function PublishPluginDialog({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
       <div
-        className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-xl"
+        className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl bg-raycast-surface p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Package className="h-5 w-5 text-primary-600" />
+            <Package className="h-5 w-5 text-primary-400" />
             <h3 className="text-lg font-semibold">发布为插件</h3>
           </div>
-          <button onClick={onClose} className="rounded-lg p-1 hover:bg-gray-100">
+          <button onClick={onClose} className="rounded-lg p-1 hover:bg-raycast-elevated">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {!result ? (
           <div className="space-y-4">
-            <div className="rounded-lg bg-green-50 p-3 text-xs text-green-700">
+            <div className="rounded-lg bg-raycast-green/10 p-3 text-xs text-raycast-green">
               代码已通过测试（{lastResult.durationMs}ms）
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">函数名 *</label>
+                <label className="mb-1 block text-sm font-medium text-raycast-text">函数名 *</label>
                 <input
                   value={functionName}
                   onChange={(e) => {
                     setFunctionName(e.target.value)
                     setClassName(e.target.value.replace(/[^a-zA-Z0-9]/g, '') + 'Function')
                   }}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
+                  className="w-full rounded-lg border border-raycast-border-solid px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
                   placeholder="greet"
                 />
               </div>
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">分类</label>
+                <label className="mb-1 block text-sm font-medium text-raycast-text">分类</label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value as PluginCategory)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
+                  className="w-full rounded-lg border border-raycast-border-solid px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
                 >
                   {Object.entries(CATEGORY_LABELS).map(([v, l]) => (
                     <option key={v} value={v}>{l}</option>
@@ -127,38 +127,38 @@ export function PublishPluginDialog({
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">描述</label>
+              <label className="mb-1 block text-sm font-medium text-raycast-text">描述</label>
               <input
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
+                className="w-full rounded-lg border border-raycast-border-solid px-3 py-2 text-sm focus:border-primary-500 focus:outline-none"
                 placeholder="Function description"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium text-gray-700">类名</label>
+              <label className="mb-1 block text-sm font-medium text-raycast-text">类名</label>
               <input
                 value={className}
                 onChange={(e) => setClassName(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 font-mono text-sm focus:border-primary-500 focus:outline-none"
+                className="w-full rounded-lg border border-raycast-border-solid px-3 py-2 font-mono text-sm focus:border-primary-500 focus:outline-none"
                 placeholder="GreetFunction"
               />
             </div>
 
             <div>
               <div className="mb-1 flex items-center justify-between">
-                <label className="text-sm font-medium text-gray-700">参数</label>
+                <label className="text-sm font-medium text-raycast-text">参数</label>
                 <button
                   onClick={addParam}
-                  className="text-xs text-primary-600 hover:underline"
+                  className="text-xs text-primary-400 hover:underline"
                 >
                   + 添加参数
                 </button>
               </div>
               <div className="space-y-2">
                 {parameters.map((p, i) => (
-                  <div key={i} className="flex items-center gap-2 rounded-lg bg-gray-50 p-2">
+                  <div key={i} className="flex items-center gap-2 rounded-lg bg-raycast-elevated p-2">
                     <input
                       value={p.name}
                       onChange={(e) => updateParam(i, 'name', e.target.value)}
@@ -175,7 +175,7 @@ export function PublishPluginDialog({
                       <option value="BOOLEAN">Boolean</option>
                       <option value="INTEGER">Integer</option>
                     </select>
-                    <label className="flex items-center gap-1 text-xs text-gray-500">
+                    <label className="flex items-center gap-1 text-xs text-raycast-muted">
                       <input
                         type="checkbox"
                         checked={p.required ?? false}
@@ -185,7 +185,7 @@ export function PublishPluginDialog({
                     </label>
                     <button
                       onClick={() => removeParam(i)}
-                      className="ml-auto text-xs text-red-500 hover:underline"
+                      className="ml-auto text-xs text-raycast-red hover:underline"
                     >
                       删除
                     </button>
@@ -195,7 +195,7 @@ export function PublishPluginDialog({
             </div>
 
             {submitting && (
-              <div className="text-sm text-gray-500 animate-pulse">生成 DEX 并发布中...</div>
+              <div className="text-sm text-raycast-muted animate-pulse">生成 DEX 并发布中...</div>
             )}
 
             <button
@@ -203,18 +203,18 @@ export function PublishPluginDialog({
               disabled={submitting || !functionName || !className}
               className="w-full rounded-lg bg-primary-600 py-2 text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-50"
             >
-              {submitting ? '发布中...' : '发布到插件市场'}
+              {submitting ? '发布中...' : '发布到能力市场'}
             </button>
           </div>
         ) : result.success ? (
           <div className="space-y-4">
-            <div className="rounded-lg bg-green-50 p-3 text-sm text-green-700">
+            <div className="rounded-lg bg-raycast-green/10 p-3 text-sm text-raycast-green">
               ✅ 插件已发布到市场
             </div>
-            <div className="space-y-2 rounded-lg bg-gray-50 p-3 text-xs font-mono">
-              <div><span className="text-gray-500">插件 ID:</span> {result.pluginId}</div>
-              <div><span className="text-gray-500">类名:</span> {result.className}</div>
-              <div><span className="text-gray-500">DEX 大小:</span> {result.dexSize} bytes</div>
+            <div className="space-y-2 rounded-lg bg-raycast-elevated p-3 text-xs font-mono">
+              <div><span className="text-raycast-muted">插件 ID:</span> {result.pluginId}</div>
+              <div><span className="text-raycast-muted">类名:</span> {result.className}</div>
+              <div><span className="text-raycast-muted">DEX 大小:</span> {result.dexSize} bytes</div>
             </div>
             <a
               href={ROUTES.PLUGIN_DETAIL(result.pluginId ?? '')}
@@ -228,12 +228,12 @@ export function PublishPluginDialog({
           </div>
         ) : (
           <div className="space-y-3">
-            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
+            <div className="rounded-lg bg-raycast-red/10 p-3 text-sm text-raycast-red">
               ❌ 发布失败：{result.error}
             </div>
             <button
               onClick={() => setResult(null)}
-              className="w-full rounded-lg border py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+              className="w-full rounded-lg border border-raycast-border-solid py-2 text-sm font-medium text-raycast-text hover:bg-raycast-elevated"
             >
               重试
             </button>

@@ -57,11 +57,11 @@ export default function TestPlaygroundPage() {
 
   return (
     <div className="mx-auto flex max-w-[1440px] flex-col" style={{ height: 'calc(100vh - 5rem)' }}>
-      <div className="flex items-center justify-between border-b bg-white px-6 py-3">
+      <div className="flex items-center justify-between border-b border-raycast-border-solid bg-raycast-surface px-6 py-3">
         <div className="flex items-center gap-3">
-          <Code2 className="h-5 w-5 text-primary-600" />
-          <h1 className="text-base font-semibold text-gray-900">Kotlin Playground</h1>
-          <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
+          <Code2 className="h-5 w-5 text-primary-400" />
+          <h1 className="text-base font-semibold text-raycast-text">Kotlin Playground</h1>
+          <span className="rounded bg-raycast-elevated px-2 py-0.5 text-xs text-raycast-muted">
             纯逻辑测试 · 无 Android API
           </span>
         </div>
@@ -79,7 +79,7 @@ export default function TestPlaygroundPage() {
               setResult(null)
               setError('')
             }}
-            className="inline-flex items-center gap-1 rounded-lg border px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-50"
+            className="inline-flex items-center gap-1 rounded-lg border border-raycast-border-solid px-3 py-1.5 text-sm text-raycast-muted hover:bg-raycast-elevated"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             重置
@@ -87,7 +87,7 @@ export default function TestPlaygroundPage() {
           <button
             onClick={() => setPublishOpen(true)}
             disabled={!result?.success}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-primary-200 bg-primary-50 px-3 py-1.5 text-sm font-medium text-primary-700 hover:bg-primary-100 disabled:opacity-30 disabled:cursor-not-allowed"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-primary-200 bg-primary-500/10 px-3 py-1.5 text-sm font-medium text-primary-400 hover:bg-primary-500/20 disabled:opacity-30 disabled:cursor-not-allowed"
             title={result?.success ? '' : '请先运行代码并确保执行成功'}
           >
             <Package className="h-4 w-4" />
@@ -96,16 +96,16 @@ export default function TestPlaygroundPage() {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 border-b bg-gray-50 px-6 py-2">
-        <span className="text-xs font-medium text-gray-400">预设：</span>
+      <div className="flex items-center gap-2 border-b border-raycast-border-solid bg-raycast-elevated px-6 py-2">
+        <span className="text-xs font-medium text-raycast-dim">预设：</span>
         {PRESETS.map((p) => (
           <button
             key={p.name}
             onClick={() => applyPreset(p)}
             className={`rounded-md px-2.5 py-1 text-xs font-medium ${
               activePreset === p.name
-                ? 'bg-primary-100 text-primary-700'
-                : 'text-gray-500 hover:bg-gray-100'
+                ? 'bg-primary-500/20 text-primary-400'
+                : 'text-raycast-muted hover:bg-raycast-elevated'
             }`}
           >
             {p.label}
@@ -114,23 +114,23 @@ export default function TestPlaygroundPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 px-6 py-2 text-xs text-red-600">{error}</div>
+        <div className="bg-raycast-red/10 px-6 py-2 text-xs text-raycast-red">{error}</div>
       )}
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="flex w-3/5 flex-col border-r">
-          <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-1.5">
-            <span className="text-xs font-medium text-gray-500">
+        <div className="flex w-3/5 flex-col border-r border-raycast-border-solid">
+          <div className="flex items-center justify-between border-b border-raycast-border-solid bg-raycast-elevated px-4 py-1.5">
+            <span className="text-xs font-medium text-raycast-muted">
               fun run(args: Map&lt;String, Any?&gt;, bridge: Any?): Any?
             </span>
             <div className="flex items-center gap-2">
-              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] text-blue-600" title="callApi 中写 'appContext' 自动替换为 Application">
+              <span className="rounded bg-raycast-blue/10 px-1.5 py-0.5 text-[10px] text-raycast-blue" title="callApi 中写 'appContext' 自动替换为 Application">
                 "appContext" 占位符
               </span>
-              <span className="rounded bg-purple-50 px-1.5 py-0.5 text-[10px] text-purple-600" title="反射获取 b::class.java.getField('appHandler')">
+              <span className="rounded bg-purple-500/10 px-1.5 py-0.5 text-[10px] text-purple-400" title="反射获取 b::class.java.getField('appHandler')">
                 bridge.appHandler 字段
               </span>
-              <span className="text-xs text-gray-400">Kotlin</span>
+              <span className="text-xs text-raycast-dim">Kotlin</span>
             </div>
           </div>
           <div className="flex-1">
@@ -139,11 +139,11 @@ export default function TestPlaygroundPage() {
         </div>
 
         <div className="flex w-2/5 flex-col">
-          <div className="flex flex-col border-b" style={{ height: '40%' }}>
-            <div className="flex items-center justify-between border-b bg-gray-50 px-4 py-1.5">
-              <span className="text-xs font-medium text-gray-500">参数 (JSON)</span>
+          <div className="flex flex-col border-b border-raycast-border-solid" style={{ height: '40%' }}>
+            <div className="flex items-center justify-between border-b border-raycast-border-solid bg-raycast-elevated px-4 py-1.5">
+              <span className="text-xs font-medium text-raycast-muted">参数 (JSON)</span>
               {!parsedArgs && (
-                <span className="text-xs text-red-400">JSON 格式错误</span>
+                <span className="text-xs text-raycast-red">JSON 格式错误</span>
               )}
             </div>
             <textarea

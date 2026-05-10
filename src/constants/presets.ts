@@ -9,7 +9,7 @@ export const PRESETS: Preset[] = [
   {
     name: 'hello',
     label: 'Hello World',
-    args: { name: 'ZUtils' },
+    args: { name: 'ZPlatform' },
     code: `val name = args["name"]?.toString() ?: "World"
 return "Hello, $name!"`,
   },
@@ -23,7 +23,7 @@ return (1..count).map { java.util.UUID.randomUUID().toString() }`,
   {
     name: 'strlen',
     label: '字符串长度统计',
-    args: { text: 'Hello ZUtils!' },
+    args: { text: 'Hello ZPlatform!' },
     code: `val text = args["text"]?.toString() ?: ""
 val len = text.length
 val chars = text.toSet().size
